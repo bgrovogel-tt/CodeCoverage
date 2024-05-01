@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CodeCoverage
 {
@@ -6,47 +8,39 @@ namespace CodeCoverage
   {
     public static void Main()
     {
-      var a = Add(5, 5);
-      var s = Subtract(5, 5);
-      var m = Multiply(5, 5);
-      var d = Divide(5, 5);
-      var mod = Modulus(5, 5);
-      var p = Power(5, 5);
-      var sq = Square(5);
-      var c = Cube(5);
-      var fac = Factorial(5);
-      var fib = Fibonacci(5);
-      var gcd = GCD(5, 5);
-      var lcm = LCM(5, 5);
-      var sqrt = Sqrt(5);
+      Console.WriteLine("Enter a number: ");
+      var stringInput = Console.ReadLine();
 
-      Console.WriteLine($"Add: {a}");
-      Console.WriteLine($"Subtract: {s}");
-      Console.WriteLine($"Multiply: {m}");
-      Console.WriteLine($"Divide: {d}");
-      Console.WriteLine($"Modulus: {mod}");
-      Console.WriteLine($"Power: {p}");
-      Console.WriteLine($"Square: {sq}");
-      Console.WriteLine($"Cube: {c}");
-      Console.WriteLine($"Factorial: {fac}");
-      Console.WriteLine($"Fibonacci: {fib}");
-      Console.WriteLine($"GCD: {gcd}");
-      Console.WriteLine($"LCM: {lcm}");
-      Console.WriteLine($"Sqrt: {sqrt}");
+      bool parsePassed = decimal.TryParse(stringInput, out decimal decInput);
+      if (parsePassed)
+      {
+        GetOperationsFromOneInput(decInput);
+        Environment.NewLine.ToString();
+      }
+
+      Console.WriteLine("Enter two numbers separated by a comma: ");
+      List<string> twoStringInputs = Console.ReadLine()?.Split(',').ToList();
+
+      if (twoStringInputs?.Count == 2 && decimal.TryParse(twoStringInputs[0], out decimal decInput1) && decimal.TryParse(twoStringInputs[1], out decimal decInput2))
+      {
+        GetOperationsFromTwoInputs(decInput1, decInput2);
+        Environment.NewLine.ToString();
+      }
+
       Console.ReadLine(); // Pause before closing
     }
 
-    public static int Add(int a, int b)
+    public static decimal Add(decimal a, decimal b)
     {
       return a + b;
     }
 
-    public static int Subtract(int a, int b)
+    public static decimal Subtract(decimal a, decimal b)
     {
       return a - b;
     }
 
-    public static int Multiply(int a, int b)
+    public static decimal Multiply(decimal a, decimal b)
     {
       return a * b;
     }
@@ -56,42 +50,42 @@ namespace CodeCoverage
       return (a / b);
     }
 
-    public static int Modulus(int a, int b)
+    public static decimal Modulus(decimal a, decimal b)
     {
       return a % b;
     }
 
-    public static int Power(int a, int b)
+    public static decimal Power(decimal a, decimal b)
     {
-      return (int)Math.Pow(a, b);
+      return (decimal)Math.Pow((double)a, (double)b);
     }
 
-    public static int Square(int a)
+    public static decimal Square(decimal a)
     {
       return a * a;
     }
 
-    public static int Cube(int a)
+    public static decimal Cube(decimal a)
     {
       return a * a * a;
     }
 
-    public static int Factorial(int a)
+    public static decimal Factorial(decimal a)
     {
-      int result = 1;
-      for (int i = 1; i <= a; i++)
+      decimal result = 1;
+      for (decimal i = 1; i <= a; i++)
       {
         result *= i;
       }
       return result;
     }
 
-    public static int Fibonacci(int a)
+    public static decimal Fibonacci(decimal a)
     {
-      int first = 0;
-      int second = 1;
-      int result = 0;
-      for (int i = 2; i <= a; i++)
+      decimal first = 0;
+      decimal second = 1;
+      decimal result = 0;
+      for (decimal i = 2; i <= a; i++)
       {
         result = first + second;
         first = second;
@@ -100,7 +94,7 @@ namespace CodeCoverage
       return result;
     }
 
-    public static int GCD(int a, int b)
+    public static decimal GCD(decimal a, decimal b)
     {
       while (a != b)
       {
@@ -116,14 +110,41 @@ namespace CodeCoverage
       return a;
     }
 
-    public static int LCM(int a, int b)
+    public static decimal LCM(decimal a, decimal b)
     {
       return a * b / GCD(a, b);
     }
 
-    public static double Sqrt(int a)
+    public static decimal Sqrt(decimal a)
     {
-      return Math.Sqrt(a);
+      return (decimal)Math.Sqrt((double)a);
+    }
+
+    protected static void GetOperationsFromOneInput(decimal userInput)
+    {
+      GetOperations(userInput, userInput);
+    }
+
+    protected static void GetOperationsFromTwoInputs(decimal userInputOne, decimal userInputTwo)
+    {
+      GetOperations(userInputOne, userInputTwo);
+    }
+
+    private static void GetOperations(decimal userInputOne, decimal userInputTwo)
+    {
+      Console.WriteLine($"Add: {Add(userInputOne, userInputTwo)}");
+      Console.WriteLine($"Subtract: {Subtract(userInputOne, userInputTwo)}");
+      Console.WriteLine($"Multiply: {Multiply(userInputOne, userInputTwo)}");
+      Console.WriteLine($"Divide: {Divide(userInputOne, userInputTwo)}");
+      Console.WriteLine($"Modulus: {Modulus(userInputOne, userInputTwo)}");
+      Console.WriteLine($"Power: {Power(userInputOne, userInputTwo)}");
+      Console.WriteLine($"Square: {Square(userInputOne)}");
+      Console.WriteLine($"Cube: {Cube(userInputOne)}");
+      Console.WriteLine($"Factorial: {Factorial(userInputOne)}");
+      Console.WriteLine($"Fibonacci: {Fibonacci(userInputOne)}");
+      Console.WriteLine($"GCD: {GCD(userInputOne, userInputTwo)}");
+      Console.WriteLine($"LCM: {LCM(userInputOne, userInputTwo)}");
+      Console.WriteLine($"Sqrt: {Sqrt(userInputOne)}");
     }
   }
 }
